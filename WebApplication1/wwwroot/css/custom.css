@@ -1,0 +1,20 @@
+﻿.tv-show {
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid lightblue;
+}
+
+.tv-show .container {
+    width: 300px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.tv-show:hover {
+    border: 1px solid black;
+}
+
+pre{
+    background:lightgray;
+    width:1000px;
+}

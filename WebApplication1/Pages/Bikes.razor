@@ -1,0 +1,50 @@
+﻿@page "/bikes"
+@inject HttpClient Http
+
+
+<h1>Melbourne Bikes</h1>
+
+<div>
+    <pre>@Shows.Length</pre>
+
+    @foreach (var show in Shows)
+    {
+        <div>@show.Name</div>
+        <div>@show.Network?.Name</div>
+        <img src="@show.Image?.Medium"/>
+    }
+</div>
+
+@code {
+    Show[] Shows = new Show[0];
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Http.GetJsonAsync<>
+
+        Shows = await Http.GetJsonAsync<Show[]>("http://api.tvmaze.com/shows?page=1");
+
+        //JsonConvert.DeserializeAnonymousType
+    }
+
+
+    public class Show
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public Network Network { get; set; }
+        public Image Image { get; set; }
+
+    }
+
+    public class Network
+    {
+        public string Name { get; set; }
+    }
+
+    public class Image
+    {
+        public string Medium { get; set; }
+        public string Original { get; set; }
+    }
+}

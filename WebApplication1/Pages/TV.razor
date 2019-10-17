@@ -1,0 +1,49 @@
+﻿@page "/tv"
+@inject HttpClient Http
+
+
+<h1>TV Show Search</h1>
+
+<div>
+
+    <input type="text" name="search" @bind-value="@Search" />
+    <input type="submit" value="Search" @onclick="PerformSearch" />
+
+    @if (Results == null && Searching)
+    {
+        <div>Loading...</div>
+    }
+    
+    @if(Results != null)
+    {
+        <div class="row">
+            @foreach (var result in Results)
+            {
+                <TvShow Id="@result.Show.Id"
+                        Title="@result.Show.Name"
+                        NetworkName="@result.Show.Network?.Name"
+                        ImageUrl="@result.Show.Image?.Medium" />
+            }
+        </div>
+    }
+
+</div>
+
+@code {
+    SearchResult[] Results = null;
+    string Search;
+    bool Searching;
+
+    protected async Task PerformSearch(){
+        Results = null;
+        Searching = true;
+
+        Console.WriteLine("Searching for " + Search);
+
+        Results = await Http.GetJsonAsync<SearchResult[]>("http://api.tvmaze.com/search/shows?q=" + Search);
+
+        Console.WriteLine("Shows found " + Results.Count());
+
+        Searching = false;
+    }
+}

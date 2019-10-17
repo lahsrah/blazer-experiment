@@ -1,0 +1,15 @@
+﻿<a href="/tv/show-detail/@Id" class="tv-show">
+    <div class="text-center container">
+        <div><strong>@Title</strong></div>
+        <img src="@ImageUrl" />
+    </div>
+</a>
+
+
+
+@code {
+    [Parameter] public int Id { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string NetworkName { get; set; }
+    [Parameter] public string ImageUrl { get; set; }
+}
